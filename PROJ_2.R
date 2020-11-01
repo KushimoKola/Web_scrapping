@@ -1,38 +1,39 @@
+# 
+tidyverse_conflicts()
+
+if (!require (dplyr)) install.packages("dplyr")
+if (!require (tidyr)) install.packages("tidyr")
+if (!require (tibble)) install.packages("tibble")
+if (!require (readr)) install.packages("readr")
+if (!require (broom)) install.packages("broom")
+if (!require (ggplot2)) install.packages("ggplot2")
+if (!require (purrr)) install.packages("purrr")
+if (!require (stringr)) install.packages("stringr")
+if (!require (forcats)) install.packages("forcats")
+# 
+install.packages("xml2")
+
+install.packages("readr")
+
+install.packages("rvest")
+
+
 library(tidyverse)
 library(shiny)
+library(xml2)
+library(readr)
 library(rvest)
 library(shinydashboard)
 library(RColorBrewer)
 
-# 
-# tidyverse_conflicts()
-# 
-# if (!require (dplyr)) install.packages("dplyr")
-# if (!require (tidyr)) install.packages("tidyr")
-# if (!require (tibble)) install.packages("tibble")
-# if (!require (readr)) install.packages("readr")
-# ##if (!require (broom)) install.packages("broom")
-# if (!require (ggplot2)) install.packages("ggplot2")
-# if (!require (purrr)) install.packages("purrr")
-# if (!require (stringr)) install.packages("stringr")
-# if (!require (forcats)) install.packages("forcats")
-# 
-# install.packages("xml2")
-# 
-# install.packages("readr")
-# 
-# install.packages("rvest")
-# 
-library(xml2)
-# library(rvest)
 
-url <- read_html("https://coinmarketcap.com/gainers-losers/")
-xml_name(url)
-url<- html_table(url)
-url
-url[[1]]
-url
-remove(url)
+# url <- read_html("https://coinmarketcap.com/gainers-losers/")
+# xml_name(url)
+# url<- html_table(url)
+# url
+# url[[1]]
+# url
+# remove(url)
 
 
 get.data <- function(x){
@@ -48,32 +49,22 @@ get.data <- function(x){
   to.parse # return the finished data.frame
 }
 
-remove(get.data)
-get.data()
+# remove(get.data)
+# get.data()
 
 get.infobox.val <- function(x){
   
   df1 <- get.data() # run the scraping function above and assign that data.frame to a variable
   df1 <- df1$`% 24h`[1]  # assign the first value of the % gain column to same variable
   df1   # return value
-<<<<<<< HEAD
 } 
 
   get.infobox.coin <- function(x){
-=======
-  
-}
-
-get.infobox.val()
-
-get.infobox.coin <- function(x){
->>>>>>> 6b731df85f3772e9d685f9558086670443f0600a
   
   df <- get.data()  # run the scraping function above and assign that data.frame to a variable
   df <- df$Name[1]  # assign the first value of the name column to same variable
   df   # return value
   
-<<<<<<< HEAD
   }
   
   get.infobox.price <- function(x){
@@ -92,12 +83,6 @@ get.infobox.coin()
 get.infobox.price ()
 
 
-=======
-}
-
-get.infobox.coin()
-
->>>>>>> 6b731df85f3772e9d685f9558086670443f0600a
 #### UI WITH SHINY
 
 ui <- dashboardPage(
@@ -150,13 +135,10 @@ of computing tools, statistics and mathematical models to solve business and ind
       
       # InfoBox
       infoBoxOutput("top.name",
-<<<<<<< HEAD
                     width = 4),
       
       # InfoBox
       infoBoxOutput("top.price",
-=======
->>>>>>> 6b731df85f3772e9d685f9558086670443f0600a
                     width = 4)
       
     ),
@@ -167,42 +149,24 @@ of computing tools, statistics and mathematical models to solve business and ind
         box(
           status = "primary",
           headerPanel("Data Table"),
-<<<<<<< HEAD
           solidHeader = F,
           br(),
           
         ## install package DT
           DT::dataTableOutput("table", height = "270px"),
           width = 10,
-          height = "180px"
-=======
-          solidHeader = T,
-          br(),
-          
-        ## install package DT
-          DT::dataTableOutput("table", height = "250px"),
-          width = 5,
-          height = "430px"
->>>>>>> 6b731df85f3772e9d685f9558086670443f0600a
+          height = "160px"
         ),
         
         # Chart
         box(
           status = "primary",
           headerPanel("Chart"),
-<<<<<<< HEAD
           solidHeader = F,
           br(),
           plotOutput("plot", height = "270px"),
           width = 10,
-          height = "230px"
-=======
-          solidHeader = T,
-          br(),
-          plotOutput("plot", height = "200px"),
-          width = 12,
-          height = "3000px"
->>>>>>> 6b731df85f3772e9d685f9558086670443f0600a
+          height = "240px"
         ),
         width = 12
       )
@@ -212,12 +176,9 @@ of computing tools, statistics and mathematical models to solve business and ind
   
 )
 
-<<<<<<< HEAD
 #install.packages("RColorBrewer")
 #library(RColorBrewer)
 
-=======
->>>>>>> 6b731df85f3772e9d685f9558086670443f0600a
 server <- function(input, output) {
   # R E A C T I V E 
   liveish_data <- reactive({
@@ -237,14 +198,11 @@ server <- function(input, output) {
     get.infobox.coin()        # call our function from above
   })
   
-<<<<<<< HEAD
   live.infobox.price <- reactive({
     invalidateLater(60000)    # refresh the report every 60k milliseconds (60 seconds)
     get.infobox.price()        # call our function from above
   })
   
-=======
->>>>>>> 6b731df85f3772e9d685f9558086670443f0600a
   # D A T A   T A B L E   O U T P U T
   output$table <- DT::renderDataTable(DT::datatable({
     data <- liveish_data()}))
@@ -252,35 +210,26 @@ server <- function(input, output) {
   # P L O T   O U T P U T
   output$plot <- renderPlot({ (ggplot(data=liveish_data(),       aes(x=Symbol, y=`% 24h`)) +
                                  geom_bar(stat="identity", fill = "springgreen3") +
-                                 theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+                                 theme(axis.text.x = element_text(angle = 60, hjust = 1)) +
                                  ggtitle("Gainers from the 24 Last Hours"))
   })
   
   # I N F O B O X   O U T P U T - V A L
   output$top.coin <- renderInfoBox({
     infoBox(
-<<<<<<< HEAD
       "Gain in Last 24 Hour",
-=======
-      "Gain in 24 Last Hour",
->>>>>>> 6b731df85f3772e9d685f9558086670443f0600a
       paste0(live.infobox.val(), "%"),
       icon = icon("signal"),
       color = "purple",
       fill = TRUE)
   })
   
-<<<<<<< HEAD
-=======
-  
->>>>>>> 6b731df85f3772e9d685f9558086670443f0600a
   # I N F O B O X   O U T P U T - N A M E
   output$top.name <- renderInfoBox({
     infoBox(
       "Coin Name",
       live.infobox.coin(),
       icon = icon("bitcoin"),
-<<<<<<< HEAD
       color = "blue",
       fill = TRUE)
   })
@@ -296,12 +245,6 @@ server <- function(input, output) {
   })
   
   
-=======
-      color = "purple",
-      fill = TRUE)
-  })
-  
->>>>>>> 6b731df85f3772e9d685f9558086670443f0600a
 }
 
 ## Let's Deploy our App
