@@ -56,14 +56,24 @@ get.infobox.val <- function(x){
   df1 <- get.data() # run the scraping function above and assign that data.frame to a variable
   df1 <- df1$`% 24h`[1]  # assign the first value of the % gain column to same variable
   df1   # return value
+<<<<<<< HEAD
 } 
 
   get.infobox.coin <- function(x){
+=======
+  
+}
+
+get.infobox.val()
+
+get.infobox.coin <- function(x){
+>>>>>>> 6b731df85f3772e9d685f9558086670443f0600a
   
   df <- get.data()  # run the scraping function above and assign that data.frame to a variable
   df <- df$Name[1]  # assign the first value of the name column to same variable
   df   # return value
   
+<<<<<<< HEAD
   }
   
   get.infobox.price <- function(x){
@@ -82,6 +92,12 @@ get.infobox.coin()
 get.infobox.price ()
 
 
+=======
+}
+
+get.infobox.coin()
+
+>>>>>>> 6b731df85f3772e9d685f9558086670443f0600a
 #### UI WITH SHINY
 
 ui <- dashboardPage(
@@ -134,10 +150,13 @@ of computing tools, statistics and mathematical models to solve business and ind
       
       # InfoBox
       infoBoxOutput("top.name",
+<<<<<<< HEAD
                     width = 4),
       
       # InfoBox
       infoBoxOutput("top.price",
+=======
+>>>>>>> 6b731df85f3772e9d685f9558086670443f0600a
                     width = 4)
       
     ),
@@ -148,6 +167,7 @@ of computing tools, statistics and mathematical models to solve business and ind
         box(
           status = "primary",
           headerPanel("Data Table"),
+<<<<<<< HEAD
           solidHeader = F,
           br(),
           
@@ -155,17 +175,34 @@ of computing tools, statistics and mathematical models to solve business and ind
           DT::dataTableOutput("table", height = "270px"),
           width = 10,
           height = "180px"
+=======
+          solidHeader = T,
+          br(),
+          
+        ## install package DT
+          DT::dataTableOutput("table", height = "250px"),
+          width = 5,
+          height = "430px"
+>>>>>>> 6b731df85f3772e9d685f9558086670443f0600a
         ),
         
         # Chart
         box(
           status = "primary",
           headerPanel("Chart"),
+<<<<<<< HEAD
           solidHeader = F,
           br(),
           plotOutput("plot", height = "270px"),
           width = 10,
           height = "230px"
+=======
+          solidHeader = T,
+          br(),
+          plotOutput("plot", height = "200px"),
+          width = 12,
+          height = "3000px"
+>>>>>>> 6b731df85f3772e9d685f9558086670443f0600a
         ),
         width = 12
       )
@@ -175,9 +212,12 @@ of computing tools, statistics and mathematical models to solve business and ind
   
 )
 
+<<<<<<< HEAD
 #install.packages("RColorBrewer")
 #library(RColorBrewer)
 
+=======
+>>>>>>> 6b731df85f3772e9d685f9558086670443f0600a
 server <- function(input, output) {
   # R E A C T I V E 
   liveish_data <- reactive({
@@ -197,11 +237,14 @@ server <- function(input, output) {
     get.infobox.coin()        # call our function from above
   })
   
+<<<<<<< HEAD
   live.infobox.price <- reactive({
     invalidateLater(60000)    # refresh the report every 60k milliseconds (60 seconds)
     get.infobox.price()        # call our function from above
   })
   
+=======
+>>>>>>> 6b731df85f3772e9d685f9558086670443f0600a
   # D A T A   T A B L E   O U T P U T
   output$table <- DT::renderDataTable(DT::datatable({
     data <- liveish_data()}))
@@ -216,19 +259,28 @@ server <- function(input, output) {
   # I N F O B O X   O U T P U T - V A L
   output$top.coin <- renderInfoBox({
     infoBox(
+<<<<<<< HEAD
       "Gain in Last 24 Hour",
+=======
+      "Gain in 24 Last Hour",
+>>>>>>> 6b731df85f3772e9d685f9558086670443f0600a
       paste0(live.infobox.val(), "%"),
       icon = icon("signal"),
       color = "purple",
       fill = TRUE)
   })
   
+<<<<<<< HEAD
+=======
+  
+>>>>>>> 6b731df85f3772e9d685f9558086670443f0600a
   # I N F O B O X   O U T P U T - N A M E
   output$top.name <- renderInfoBox({
     infoBox(
       "Coin Name",
       live.infobox.coin(),
       icon = icon("bitcoin"),
+<<<<<<< HEAD
       color = "blue",
       fill = TRUE)
   })
@@ -244,6 +296,12 @@ server <- function(input, output) {
   })
   
   
+=======
+      color = "purple",
+      fill = TRUE)
+  })
+  
+>>>>>>> 6b731df85f3772e9d685f9558086670443f0600a
 }
 
 ## Let's Deploy our App
